@@ -1,6 +1,7 @@
 <?php
 
 use Laravel\Fortify\Features;
+use App\Providers\RouteServiceProvider;
 
 return [
 
@@ -15,7 +16,26 @@ return [
     |
     */
 
-    'guard' => 'web',
+    'guards' => [
+        'web' => [                    // 一般ユーザー用（デフォルト）
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        'admin' => [                  // 管理者用（追加）
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+    ],
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
+        'admins' => [                 // 追加
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +93,7 @@ return [
     |
     */
 
-    'home' => '/home',
+    'home' => RouteServiceProvider::HOME,
 
     /*
     |--------------------------------------------------------------------------
@@ -147,13 +167,13 @@ return [
         Features::registration(),
         Features::resetPasswords(),
         // Features::emailVerification(),
-        Features::updateProfileInformation(),
-        Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
+        //Features::updateProfileInformation(),
+        //Features::updatePasswords(),
+        //Features::twoFactorAuthentication([
+          //  'confirm' => true,
+            //'confirmPassword' => true,
             // 'window' => 0,
-        ]),
+        //]),
     ],
 
 ];

@@ -7,3 +7,8 @@
 body {
     min-width: 1400px;
 }
+
+#toast-container {
+    margin-top: 100px;
+
+}
