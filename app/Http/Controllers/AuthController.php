@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
 
+
+
 class AuthController extends Controller
 {
     public function create()

@@ -51,7 +51,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::registerView(function () {
-            return view('user.register')->with('flashSuccess', '会員登録が完了しました');
+            return view('user.register');
         });
 
         // adminsテーブルで認証

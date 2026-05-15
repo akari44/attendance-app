@@ -17,5 +17,10 @@ use Illuminate\Support\Facades\Route;
 // 管理者ユーザー
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'create']);
-    Route::get('/attendance/list', [AdminAttendanceController::class, 'index']);
+    Route::post('/logout', [AdminLoginController::class, 'destroy']); 
+    Route::middleware('auth')->group(function () {
+        Route::get('/attendance/list', [AdminAttendanceController::class, 'index']);
+        // 今後増える管理者ルートもここに
+    });
+    
 });
