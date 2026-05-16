@@ -5,7 +5,7 @@
                 <img src="{{ asset('img/logo.png') }}" alt="COACHTECH" class="header-admin__logo-img">
             </a>
         </div>
-        {{-- @auth --}}
+        @auth
         {{-- メール認証実装後@if(Auth::user()->hasVerifiedEmail()) --}}
         <nav class="header-admin__nav">
             <ul class="header-admin__nav-list">
@@ -27,6 +27,6 @@
             </ul>
         </nav>
         {{-- メール認証実装後　@endif --}}
-        {{-- @endauth --}}
+        @endauth
     </div>
 </header>
