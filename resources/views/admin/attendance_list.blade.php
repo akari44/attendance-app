@@ -1,12 +1,45 @@
 @extends('layouts.default')
 {{-- タイトル --}}
-@section('title','勤怠一覧画面（管理者）')
+@section('title', '勤怠一覧画面（管理者）')
 {{-- css --}}
 @section('css')
-<link rel="stylesheet" href="{{ asset('/css/list.css')}}">
+    <link rel="stylesheet" href="{{ asset('/css/list.css')}}">
 @endsection
 {{-- 本体 --}}
 @section('content')
 {{-- ヘッダー --}}
 @include('components.header_admin')
-<p>ログイン成功</p>
+<main class="main-content">
+    <div class="page-title">
+        <h1>todayの勤怠</h1>
+    </div>
+
+    <div class="calender">
+        <div class="yesterday">前日</div>
+        <div class="today">2026/09/09</div>
+        <div class="tomorrow">翌日</div>
+    </div>
+
+    <table class="main-list">
+        <tr>
+            <th>名前</th>
+            <th>出勤</th>
+            <th>退勤</th>
+            <th>休憩</th>
+            <th>合計</th>
+            <th>詳細</th>
+        </tr>
+        {{-- @foreach ( as ) --}}
+        <tr>
+            <td>山田</td>
+            <td>０９：００</td>
+            <td>１８：００</td>
+            <td>１：００</td>
+            <td>８：００</td>
+            <td>
+                <a href="#">詳細</a>
+            </td>
+        </tr>
+        {{-- @endforeach --}}
+    </table>
+</main>

@@ -9,14 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Admin::create([
-            'name' => 'akari',
-            'email' => 'akari@mail.com',
+            'name' => 'admin',
+            'email' => 'admin@coachtech.com',
             'password' => Hash::make('password'),
         ]);
     }

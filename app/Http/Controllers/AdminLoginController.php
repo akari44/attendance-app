@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
-        public function create()
+    public function create()
     {
         return view('admin.login');
     }
@@ -18,6 +18,6 @@ class AdminLoginController extends Controller
         Auth::guard('web')->logout();          // web ガードからログアウト
         $request->session()->invalidate();     // セッション破棄
         $request->session()->regenerateToken(); // CSRFトークン再生成
-        return redirect('/admin/login')->with('flashSuccess','ログアウトしました');
+        return redirect('admin/login')->with('flashSuccess', 'ログアウトしました');
     }
 }

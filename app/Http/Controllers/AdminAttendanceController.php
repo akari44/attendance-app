@@ -5,8 +5,13 @@ use Illuminate\Http\Request;
 
 class AdminAttendanceController extends Controller
 {
-        public function index()
+    public function index()
     {
         return view('admin.attendance_list');
+    }
+
+    public function show()
+    {
+        return view('admin.attendance_detail');
     }
 }
