@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminAttendanceController extends Controller
 {
     public function index()
     {
-        return view('admin.attendance_list');
+        $users = User::all();
+        return view('admin.attendance_list', compact('users'));
     }
 
-    public function show()
+    public function show($id)
     {
-        return view('admin.attendance_detail');
+        $user = User::findOrFail($id);
+        return view('admin.attendance_detail', compact('user'));
     }
 }

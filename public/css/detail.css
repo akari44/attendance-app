@@ -1,0 +1,106 @@
+main  {
+    width: 900px;
+    height: auto;
+    margin: 0 auto;
+    padding: 80px 0;
+    align-items: center;
+}
+
+.page-title {
+    height: 40px;
+    width: 100%;
+    border-left: 8px solid #000;
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 700;
+    padding-left: 30px;
+}
+
+.main-table {
+    width: 100%;
+    table-layout: fixed;
+    height: auto;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-bottom: 60px;
+    border: solid 1px #E1E1E1;
+}
+
+tr{
+    border-bottom: solid 2px #E1E1E1;
+}
+th,td {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+td {
+    color: #000;
+}
+
+.main-table th {
+    padding: 30px 50px;
+    color: #737373;
+    text-align: left;
+}
+
+.main-table .name{
+    padding-left: 50px;
+}
+
+.main-table .start_time,
+.main-table .year {
+    text-align: right;
+    padding-right: 20px;
+}
+.main-table .tilde {
+    text-align: center;
+}
+
+.main-table .end_time,
+.main-table .date {
+    text-align: left;
+    padding-left: 20px;
+
+}
+
+.main-table .wrapper_reason {
+    height: 120px;
+    padding-left: 30px;
+
+}
+
+.time-input {
+    width: 105;
+    padding: 5px 10px;
+    border: solid 1px #E1E1E1;
+    text-align: center;
+}
+
+.reason {
+    width: 300px;
+    height: 60px;
+    padding: 5px 10px;
+    border: solid 1px #E1E1E1;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submit-btn {
+    height: 50px;
+    width: auto;
+    font-size: 22px;
+    font-weight: 700;
+    background-color: #000;
+    color: #fff;
+    padding: 5px 40px;
+    border-radius: 5px;
+}

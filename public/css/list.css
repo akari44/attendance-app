@@ -109,7 +109,7 @@ h1{
 th,td{
     font-size: 16px;
     font-weight: bold;
-    padding: 8px 8px;
+    padding: 10px 8px;
     color: #737373;
     text-align: center;
 }
@@ -123,4 +123,19 @@ td {
 td a{
     color: #000;
     text-decoration: none;
+}
+
+.button-wrapper{
+    display: flex;
+    justify-content: flex-end;
+}
+.submit-btn{
+    height: 50px;
+    width: auto;
+    font-size: 22px;
+    font-weight: 700;
+    background-color: #000;
+    color: #fff;
+    padding: 5px 40px;
+    border-radius: 5px;
 }

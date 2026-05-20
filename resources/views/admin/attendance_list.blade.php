@@ -29,17 +29,17 @@
             <th>合計</th>
             <th>詳細</th>
         </tr>
-        {{-- @foreach ( as ) --}}
-        <tr>
-            <td>山田</td>
-            <td>０９：００</td>
-            <td>１８：００</td>
-            <td>１：００</td>
-            <td>８：００</td>
-            <td>
-                <a href="#">詳細</a>
-            </td>
-        </tr>
-        {{-- @endforeach --}}
+        @foreach ($users as $user)
+            <tr>
+                <td>{{$user->name}}</td>
+                <td>０９：００</td>
+                <td>１８：００</td>
+                <td>１：００</td>
+                <td>８：００</td>
+                <td>
+                    <a href="{{route('admin.attendance.detail', $user->id)}}">詳細</a>
+                </td>
+            </tr>
+        @endforeach
     </table>
 </main>

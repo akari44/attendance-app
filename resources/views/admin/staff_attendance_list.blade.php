@@ -37,9 +37,16 @@
             <td>１：００</td>
             <td>８：００</td>
             <td>
-                <a href="#">詳細</a>
+                <a href="{{route('admin.attendance.detail', $user->id)}}">詳細</a>
             </td>
         </tr>
         {{-- @endforeach --}}
     </table>
+
+    <div class="button-wrapper">
+        <form action="#" method="get">
+            <button type="submit" class="submit-btn">CSV出力</button>
+        </form>
+    </div>
+
 </main>
