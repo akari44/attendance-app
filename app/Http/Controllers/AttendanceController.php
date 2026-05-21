@@ -8,6 +8,7 @@ class AttendanceController extends Controller
 {
     public function show()
     {
-        return view('user.attendance');
+        $status = '休憩中';
+        return view('user.attendance', compact('status'));
     }
 }

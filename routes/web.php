@@ -4,6 +4,8 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminAttendanceController;
 use App\Http\Controllers\AdminStaffController;
 use App\Http\Controllers\AdminRequestApproveController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceListController;
 
 use App\Http\Controllers\StampCorrectionRequestController;
 use Illuminate\Support\Facades\Route;
@@ -11,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 
 
 // 一般ユーザー
-
+Route::middleware('auth')->group(function () {
+    Route::get('/attendance', [AttendanceController::class, 'show'])->name('user.attendance');
+    Route::get('/attendance/list', [AttendanceListController::class, 'index'])->name('user.attendance.list');
+});
 
 // 管理者ユーザー
 Route::prefix('admin')->group(function () {
@@ -29,7 +34,5 @@ Route::prefix('admin')->group(function () {
 
 });
 
-Route::middleware('auth:admin')->group(function () {
-    Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('request.list');
-});
+Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('request.list')->middleware('auth:admin');
 
