@@ -16,26 +16,7 @@ return [
     |
     */
 
-    'guards' => [
-        'web' => [                    // 一般ユーザー用（デフォルト）
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
-        'admin' => [                  // 管理者用（追加）
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
-    ],
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
-        'admins' => [                 // 追加
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
-        ],
-    ],
+    'guard' => 'web',
 
     /*
     |--------------------------------------------------------------------------
@@ -170,9 +151,9 @@ return [
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         //Features::twoFactorAuthentication([
-          //  'confirm' => true,
-            //'confirmPassword' => true,
-            // 'window' => 0,
+        //  'confirm' => true,
+        //'confirmPassword' => true,
+        // 'window' => 0,
         //]),
     ],
 

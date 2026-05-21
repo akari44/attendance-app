@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 
 class AdminLoginController extends Controller
@@ -15,7 +16,7 @@ class AdminLoginController extends Controller
 
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();          // web ガードからログアウト
+        Auth::guard('admin')->logout();
         $request->session()->invalidate();     // セッション破棄
         $request->session()->regenerateToken(); // CSRFトークン再生成
         return redirect('admin/login')->with('flashSuccess', 'ログアウトしました');

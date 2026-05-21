@@ -15,15 +15,16 @@ use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
      */
-    
+
 
     /**
      * Bootstrap any application services.
@@ -37,12 +38,12 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 
             return Limit::perMinute(100)->by($throttleKey);
         });
 
-         // ログイン画面の出し分け
+        // ログイン画面の出し分け
         Fortify::loginView(function (Request $request) {
             if ($request->is('admin/*')) {
                 return view('admin.login');
@@ -59,6 +60,7 @@ class FortifyServiceProvider extends ServiceProvider
             if ($request->type === 'admin') {
                 $admin = Admin::where('email', $request->email)->first();
                 if ($admin && Hash::check($request->password, $admin->password)) {
+                    Auth::guard('admin')->login($admin); // adminガードに手動ログイン
                     return $admin;
                 }
             } else {
@@ -69,5 +71,5 @@ class FortifyServiceProvider extends ServiceProvider
             }
         });
 
-    }  
+    }
 }

@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
             public function toResponse($request)
             {
-                if (auth()->user() instanceof \App\Models\Admin) {
+                if (Auth::guard('admin')->check()) {
                     return redirect('/admin/attendance/list')->with('flashSuccess', 'ログインしました');
                 }
                 return redirect('/attendance')->with('flashSuccess', 'ログインしました');
