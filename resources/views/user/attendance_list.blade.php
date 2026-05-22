@@ -37,7 +37,7 @@
             <td>１：００</td>
             <td>８：００</td>
             <td>
-                <a href="#">詳細</a>
+                <a href="{{ route('user.attendance.detail', 1) }}">詳細</a>
             </td>
         </tr>
         {{-- @endforeach --}}
