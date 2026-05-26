@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 // 一般ユーザー
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'show'])->name('user.attendance');
+    Route::post('/attendance', [AttendanceController::class, 'store'])->name('user.attendance.store');
     Route::get('/attendance/list', [AttendanceListController::class, 'index'])->name('user.attendance.list');
+    Route::get('/attendance/detail/{id}', [AttendanceListController::class, 'show'])->name('user.attendance.detail');
 });
 
 // 管理者ユーザー
@@ -34,5 +36,5 @@ Route::prefix('admin')->group(function () {
 
 });
 
-Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('request.list')->middleware('auth:admin');
+Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('common.request.list')->middleware('auth:web,admin');
 

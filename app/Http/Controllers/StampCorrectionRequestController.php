@@ -12,8 +12,8 @@ class StampCorrectionRequestController extends Controller
     public function index()
     {
         if (Auth::guard('admin')->check()) {
-            return view('admin.request_list', ['tab' => 'pending']);
+            return view('common.request_list', ['isAdmin' => true]);
         }
-        return view('user.request_list');
+        return view('common.request_list', ['isAdmin' => false]);
     }
 }

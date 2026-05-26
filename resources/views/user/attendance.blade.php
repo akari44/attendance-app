@@ -15,28 +15,40 @@
             <span>勤務外</span>
         </div>
         <div class="attendance__date">
-            <time>2023年6月1日(木)</time>
+            <time>{{$dt->isoFormat('Y年M月D日(ddd)')}}</time>
         </div>
         <div class="attendance__time">
-            <time>08:00</time>
+            <time>{{ $dt->format('H:i') }}</time>
         </div>
         <div class="attendance__actions">
-            <button type="submit" class="attendance__btn attendance__btn--primary">出勤</button>
-        </div> --}}
+            <form action="{{ route('user.attendance.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="action" value="clock_in">
+                <button type="submit" class="attendance__btn attendance__btn--primary">出勤</button>
+            </form>
+        </div>
 
     @elseif ($status === '出勤中')
         <div class="attendance__status">
             <span>出勤中</span>
         </div>
         <div class="attendance__date">
-            <time>2023年6月1日(木)</time>
+            <time>{{$dt->isoFormat('Y年M月D日(ddd)')}}</time>
         </div>
         <div class="attendance__time">
-            <time>09:00</time>
+            <time>{{ $dt->format('H:i') }}</time>
         </div>
         <div class="attendance__actions">
-            <button type="submit" class="attendance__btn attendance__btn--primary">退勤</button>
-            <button type="submit" class="attendance__btn attendance__btn--secondary">休憩入</button>
+            <form action="{{ route('user.attendance.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="action" value="clock_out">
+                <button type="submit" class="attendance__btn attendance__btn--primary">退勤</button>
+            </form>
+            <form action="{{ route('user.attendance.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="action" value="break_start">
+                <button type="submit" class="attendance__btn attendance__btn--secondary">休憩入</button>
+            </form>
         </div>
 
     @elseif ($status === '休憩中')
@@ -44,13 +56,17 @@
             <span>休憩中</span>
         </div>
         <div class="attendance__date">
-            <time>2023年6月1日(木)</time>
+            <time>{{$dt->isoFormat('Y年M月D日(ddd)')}}</time>
         </div>
         <div class="attendance__time">
-            <time>13:00</time>
+            <time>{{ $dt->format('H:i') }}</time>
         </div>
         <div class="attendance__actions">
-            <button type="submit" class="attendance__btn attendance__btn--secondary">休憩戻</button>
+            <form action="{{ route('user.attendance.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="action" value="break_end">
+                <button type="submit" class="attendance__btn attendance__btn--secondary">休憩戻</button>
+            </form>
         </div>
 
     @elseif ($status === '退勤済')
@@ -58,10 +74,10 @@
             <span>退勤済</span>
         </div>
         <div class="attendance__date">
-            <time>2023年6月1日(木)</time>
+            <time>{{$dt->isoFormat('Y年M月D日(ddd)')}}</time>
         </div>
         <div class="attendance__time">
-            <time>18:00</time>
+            <time>{{ $dt->format('H:i') }}</time>
         </div>
         <div class="attendance__actions">
             <span class="attendance__message">お疲れ様でした。</span>
