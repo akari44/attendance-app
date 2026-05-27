@@ -14,9 +14,9 @@
         <h1>勤怠一覧</h1>
     </div>
 
-    <div class="calender">
+    <div class="calendar">
         <div class="yesterday">前日</div>
-        <div class="today">2026/09/09</div>
+        <div class="today">{{ $today }}</div>
         <div class="tomorrow">翌日</div>
     </div>
 
@@ -29,17 +29,17 @@
             <th>合計</th>
             <th>詳細</th>
         </tr>
-        {{-- @foreach () --}}
+        @foreach ($attendances as $attendance)
         <tr>
-            <td>０６/０１（木）</td>
-            <td>０９：００</td>
-            <td>１８：００</td>
-            <td>１：００</td>
-            <td>８：００</td>
+            <td>{{$attendance->date}}</td>
+            <td>{{$attendance->clock_in}}</td>
+            <td>{{$attendance->clock_out}}</td>
+            <td>{{ $attendance->total_break_time }}</td>
+            <td>{{ $attendance->total_work_time }}</td>
             <td>
-                <a href="{{ route('user.attendance.detail', 1) }}">詳細</a>
+                <a href="{{ route('user.attendance.detail', $attendance->id) }}">詳細</a>
             </td>
         </tr>
-        {{-- @endforeach --}}
+        @endforeach
     </table>
 </main>
