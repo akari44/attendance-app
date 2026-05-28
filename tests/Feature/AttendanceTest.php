@@ -228,6 +228,43 @@ class AttendanceTest extends TestCase
         $response->assertSee('01:00');
     }
 
+    // 退勤機能
+    public function test_clock_out_button_work()
+    {
+        $user = User::factory()->create();
+        Attendance::create([
+            'user_id' => $user->id,
+            'date' => Carbon::today(),
+            'clock_in' => Carbon::now()->format('H:i:s'),
+            'status' => '出勤中',
+        ]);
+
+        $response = $this->actingAs($user)->get('/attendance');
+        $response->assertSee('退勤');
+
+        $this->actingAs($user)->post('/attendance', ['action' => 'clock_out']);
+        $response = $this->actingAs($user)->get('/attendance');
+        $response->assertSee('お疲れ様でした。');
+    }
+
+    public function test_clock_out_time_recorded_in_list()
+    {
+        $user = User::factory()->create();
+        Attendance::create([
+            'user_id' => $user->id,
+            'date' => Carbon::today(),
+            'clock_in' => Carbon::now()->subHour()->format('H:i:s'),
+            'status' => '出勤中',
+        ]);
+
+        $this->actingAs($user)->get('/attendance');
+        $this->actingAs($user)->post('/attendance', ['action' => 'clock_out']);
+
+        $response = $this->actingAs($user)->get('/attendance/list');
+        $response->assertSee(Carbon::now()->format('H:i'));
+
+    }
+
 
 
 }
