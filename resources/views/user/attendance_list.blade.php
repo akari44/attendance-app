@@ -15,9 +15,13 @@
     </div>
 
     <div class="calendar">
-        <div class="yesterday">前日</div>
-        <div class="today">{{ $today }}</div>
-        <div class="tomorrow">翌日</div>
+        <div class="prev">
+            <a href="?month={{ $prevMonth }}">前月</a>
+        </div>
+        <div class="now">{{ $today }}</div>
+        <div class="next">
+            <a href="?month={{ $nextMonth }}">翌月</a>
+        </div>
     </div>
 
     <table class="main-list">
@@ -30,16 +34,16 @@
             <th>詳細</th>
         </tr>
         @foreach ($attendances as $attendance)
-        <tr>
-            <td>{{$attendance->date}}</td>
-            <td>{{$attendance->clock_in}}</td>
-            <td>{{$attendance->clock_out}}</td>
-            <td>{{ $attendance->total_break_time }}</td>
-            <td>{{ $attendance->total_work_time }}</td>
-            <td>
-                <a href="{{ route('user.attendance.detail', $attendance->id) }}">詳細</a>
-            </td>
-        </tr>
+            <tr>
+                <td>{{$attendance->date}}</td>
+                <td>{{$attendance->clock_in}}</td>
+                <td>{{$attendance->clock_out}}</td>
+                <td>{{ $attendance->total_break_time }}</td>
+                <td>{{ $attendance->total_work_time }}</td>
+                <td>
+                    <a href="{{ route('user.attendance.detail', $attendance->id) }}">詳細</a>
+                </td>
+            </tr>
         @endforeach
     </table>
 </main>

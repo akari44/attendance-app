@@ -15,9 +15,9 @@
     </div>
 
     <div class="calender">
-        <div class="yesterday">前日</div>
-        <div class="today">2026/09/09</div>
-        <div class="tomorrow">翌日</div>
+        <div class="prev">前日</div>
+        <div class="now">2026/09/09</div>
+        <div class="next">翌日</div>
     </div>
 
     <table class="main-list">
