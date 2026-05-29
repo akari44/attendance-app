@@ -31,7 +31,7 @@ class AttendanceController extends Controller
             return redirect()->route('user.attendance');
 
         } elseif ($request->action === 'clock_out') {
-           Attendance::where('user_id', auth()->id())
+            Attendance::where('user_id', auth()->id())
             ->where('date', Carbon::today())
             ->update([
             'clock_out' => Carbon::now()->format('H:i:s'),

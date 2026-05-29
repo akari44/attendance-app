@@ -14,10 +14,14 @@
         <h1>{{ $user->name }}さんの勤怠</h1>
     </div>
 
-    <div class="calender">
-        <div class="prev">前日</div>
-        <div class="now">2026/09/09</div>
-        <div class="next">翌日</div>
+    <div class="calendar">
+        <div class="prev">
+            <a href="?month={{ $prevMonth }}">前月</a>
+        </div>
+        <div class="now">{{ $today }}</div>
+        <div class="next">
+            <a href="?month={{ $nextMonth }}">翌月</a>
+        </div>
     </div>
 
     <table class="main-list">
@@ -29,18 +33,18 @@
             <th>合計</th>
             <th>詳細</th>
         </tr>
-        {{-- @foreach ( as ) --}}
-        <tr>
-            <td>06/01(木）</td>
-            <td>０９：００</td>
-            <td>１８：００</td>
-            <td>１：００</td>
-            <td>８：００</td>
-            <td>
-                <a href="{{route('admin.attendance.detail', $user->id)}}">詳細</a>
-            </td>
-        </tr>
-        {{-- @endforeach --}}
+        @foreach ($attendances as $attendance)
+            <tr>
+                <td>{{$attendance->date}}</td>
+                <td>{{$attendance->clock_in}}</td>
+                <td>{{$attendance->clock_out}}</td>
+                <td>{{ $attendance->total_break_time }}</td>
+                <td>{{ $attendance->total_work_time }}</td>
+                <td>
+                    <a href="{{route('admin.attendance.detail', $attendance->id)}}">詳細</a>
+                </td>
+            </tr>
+        @endforeach
     </table>
 
     <div class="button-wrapper">

@@ -2,19 +2,34 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Attendance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminAttendanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('admin.attendance_list', compact('users'));
+        $date = $request->date ?? Carbon::today()->format('Y-m-d');
+
+        $attendances = Attendance::with('user')
+            ->where('date', Carbon::parse($date)->toDateString())
+            ->get();
+
+        $today_title = Carbon::today()->locale('ja')->isoFormat('Y年M月D日');
+        $today = Carbon::parse($date)->format('Y/m/d');
+        $prevDay = Carbon::parse($date)->subDay()->format('Y-m-d');
+        $nextDay = Carbon::parse($date)->addDay()->format('Y-m-d');
+
+
+
+        return view('admin.attendance_list', compact('attendances', 'today_title', 'today', 'prevDay', 'nextDay'));
     }
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        return view('admin.attendance_detail', compact('user'));
+        $attendance = Attendance::with('breakTimes')->findOrFail($id);
+        $user = $attendance->user;
+        return view('admin.attendance_detail', compact('attendance', 'user'));
     }
 }
