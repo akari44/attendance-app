@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance', [AttendanceController::class, 'store'])->name('user.attendance.store');
     Route::get('/attendance/list', [AttendanceListController::class, 'index'])->name('user.attendance.list');
     Route::get('/attendance/detail/{id}', [AttendanceListController::class, 'show'])->name('user.attendance.detail');
+    Route::post('/attendance/detail/{id}', [AttendanceListController::class, 'store'])->name('user.attendance.detail.store');
 });
 
 // 管理者ユーザー

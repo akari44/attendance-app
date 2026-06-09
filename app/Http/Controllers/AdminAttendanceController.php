@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
 use App\Models\Attendance;
+use App\Models\AttendanceRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Requests\AttendanceCorrectionRequest;
 
 class AdminAttendanceController extends Controller
 {
@@ -30,6 +31,13 @@ class AdminAttendanceController extends Controller
     {
         $attendance = Attendance::with('breakTimes')->findOrFail($id);
         $user = $attendance->user;
-        return view('admin.attendance_detail', compact('attendance', 'user'));
+        $today = Carbon::parse($attendance->getRawOriginal('date'));
+
+        $attendanceRequest = AttendanceRequest::where('attendance_id', $id)
+            ->with('breakRequests')
+            ->latest()
+            ->first();
+
+        return view('admin.attendance_detail', compact('attendance', 'user', 'today', 'attendanceRequest'));
     }
 }

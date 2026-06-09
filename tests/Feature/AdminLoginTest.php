@@ -9,16 +9,17 @@ use App\Models\Admin;
 
 class AdminLoginTest extends TestCase
 {
-    use RefreshDatabase; 
+    use RefreshDatabase;
+    // テストケース　ID:3
 
-     public function test_email_is_required_for_login()
+    public function test_email_is_required_for_login()
     {
         $response = $this->from('/admin/login')->post('/login', [
             'email' => '',
             'password' => 'password1234',
-            'type' =>'admin',
+            'type' => 'admin',
         ]);
-    
+
         $response->assertRedirect('/admin/login');
         $response->assertSessionHasErrors(['email']);
 
@@ -31,7 +32,7 @@ class AdminLoginTest extends TestCase
         $response = $this->from('/admin/login')->post('/login', [
             'email' => 'test@example.com',
             'password' => '',
-            'type' =>'admin',
+            'type' => 'admin',
         ]);
 
         $response->assertRedirect('/admin/login');
@@ -41,7 +42,7 @@ class AdminLoginTest extends TestCase
         $response->assertSee('パスワードを入力してください');
     }
 
-     public function test_user_cannot_login_with_invalid_credentials()
+    public function test_user_cannot_login_with_invalid_credentials()
     {
         $admin = Admin::create([
             'name' => 'テスト管理者',
@@ -52,7 +53,7 @@ class AdminLoginTest extends TestCase
         $response = $this->from('/admin/login')->post('/login', [
             'email' => 'admin@example.com',
             'password' => 'wrongpassword',
-            'type' =>'admin',
+            'type' => 'admin',
         ]);
 
         $response->assertRedirect('/admin/login');

@@ -42,21 +42,21 @@
             <th>申請日時</th>
             <th>詳細</th>
         </tr>
-        {{-- @foreach ( as ) --}}
-        <tr>
-            <td>承認待ち</td>
-            <td>なまえ</td>
-            <td>2026/04/09</td>
-            <td>遅延のため</td>
-            <td>2026/04/09</td>
-            <td>
-                @if ($isAdmin)
-                    <a href="{{ route('admin.request.approve', 1) }}">詳細管理者</a>
-                @else
-                    <a href="{{ route('user.attendance.detail', 1) }}">詳細ユーザー</a>
-                @endif
-            </td>
-        </tr>
-        {{-- @endforeach --}}
+        @foreach ($requests as $request)
+            <tr>
+                <td>{{$request->status}}</td>
+                <td>{{$request->attendance->user->name}}</td>
+                <td>{{ date('Y/m/d', strtotime($request->attendance->getRawOriginal('date'))) }}</td>
+                <td>{{$request->reason}}</td>
+                <td>{{$request->created_at->format('Y/m/d')}}</td>
+                <td>
+                    @if ($isAdmin)
+                        <a href="{{ route('admin.request.approve', $request->id) }}">詳細</a>
+                    @else
+                        <a href="{{ route('user.attendance.detail', $request->attendance->id) }}">詳細</a>
+                    @endif
+                </td>
+            </tr>
+        @endforeach
     </table>
 </main>

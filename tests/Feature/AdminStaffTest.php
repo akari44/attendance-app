@@ -14,6 +14,7 @@ use Carbon\Carbon;
 class AdminStaffTest extends TestCase
 {
     use RefreshDatabase;
+    // テストケース　ID:14
     public function test_admin_can_see_all_staff_name_and_email()
     {
         $admin = Admin::create([
@@ -50,23 +51,29 @@ class AdminStaffTest extends TestCase
             'email' => 'user@example.com',
             'password' => Hash::make('password'),
         ]);
+
+        // 月の境界をまたがない設定
+        $date1 = Carbon::now()->startOfMonth()->addDays(14);
+        $date2 = Carbon::now()->startOfMonth()->addDays(15);
+        $date3 = Carbon::now()->startOfMonth()->addDays(16);
+
         Attendance::create([
             'user_id' => $user->id,
-            'date' => Carbon::today(),
+            'date' => $date1,
             'clock_in' => '09:00:00',
             'clock_out' => '18:00:00',
             'status' => '退勤済',
         ]);
-        $attendance = Attendance::create([
+        Attendance::create([
             'user_id' => $user->id,
-            'date' => Carbon::yesterday(),
+            'date' => $date2,
             'clock_in' => '09:10:00',
             'clock_out' => '18:10:00',
             'status' => '退勤済',
         ]);
-        $attendance = Attendance::create([
+        Attendance::create([
             'user_id' => $user->id,
-            'date' => Carbon::tomorrow(),
+            'date' => $date3,
             'clock_in' => '09:20:00',
             'clock_out' => '18:20:00',
             'status' => '退勤済',
@@ -75,9 +82,9 @@ class AdminStaffTest extends TestCase
         $response->assertSee('/admin/attendance/staff/' . $user->id);
         $response = $this->actingAs($admin, 'admin')->get('admin/attendance/staff/' . $user->id);
         $response->assertSee('テスト太郎');
-        $response->assertSee(Carbon::today()->locale('ja')->isoFormat('M月D日(ddd)'));
-        $response->assertSee(Carbon::yesterday()->locale('ja')->isoFormat('M月D日(ddd)'));
-        $response->assertSee(Carbon::tomorrow()->locale('ja')->isoFormat('M月D日(ddd)'));
+        $response->assertSee($date1->locale('ja')->isoFormat('M月D日(ddd)'));
+        $response->assertSee($date2->locale('ja')->isoFormat('M月D日(ddd)'));
+        $response->assertSee($date3->locale('ja')->isoFormat('M月D日(ddd)'));
         $response->assertSee('09:00');
         $response->assertSee('18:00');
         $response->assertSee('09:10');

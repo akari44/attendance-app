@@ -139,3 +139,7 @@ td a{
     padding: 5px 40px;
     border-radius: 5px;
 }
+
+.tab.active {
+    font-weight: bold;
+}

@@ -12,26 +12,32 @@ use Tests\TestCase;
 class AttendanceListTest extends TestCase
 {
     use RefreshDatabase;
+    // テストケース　ID:9
     public function test_show_all_attendances()
     {
         $user = User::factory()->create();
+
+        // 月の境界をまたがない設定
+        $date1 = Carbon::now()->startOfMonth()->addDays(14);
+        $date2 = Carbon::now()->startOfMonth()->addDays(19);
+
         Attendance::create([
             'user_id' => $user->id,
-            'date' => Carbon::yesterday(),
+            'date' => $date1,
             'clock_in' => '09:00:00',
             'clock_out' => '18:00:00',
             'status' => '退勤済',
         ]);
         Attendance::create([
             'user_id' => $user->id,
-            'date' => Carbon::today(),
+            'date' => $date2,
             'clock_in' => '09:00:00',
             'clock_out' => '18:00:00',
             'status' => '退勤済',
         ]);
         $response = $this->actingAs($user)->get('/attendance/list');
-        $response->assertSee(Carbon::yesterday()->locale('ja')->isoFormat('M月D日(ddd)'));
-        $response->assertSee(Carbon::today()->locale('ja')->isoFormat('M月D日(ddd)'));
+        $response->assertSee($date1->locale('ja')->isoFormat('M月D日(ddd)'));
+        $response->assertSee($date2->locale('ja')->isoFormat('M月D日(ddd)'));
     }
 
     public function test_show_month_now()

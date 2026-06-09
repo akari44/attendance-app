@@ -9,10 +9,11 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-// ステータス確認機能
+
 class AttendanceTest extends TestCase
 {
     use RefreshDatabase;
+    // テストケース　ID:4,5,6,7,8
 
     public function test_datetime_display()
     {

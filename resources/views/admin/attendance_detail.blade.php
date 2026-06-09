@@ -30,44 +30,55 @@
                 </tr>
                 <tr>
                     <th>日付</th>
-                    <td class="year">２０２６年</td>
+                    <td class="year">{{ $today->year . '年'}}</td>
                     <td class="tilde"></td>
-                    <td class="date">４月６日</td>
+                    <td class="date">{{ $today->month . '月' . $today->day . '日' }}</td>
                 </tr>
                 <tr>
                     <th>出勤・退勤</th>
                     <td class="start_time">
-                        <input type="text" class="time-input" name="clock_in" value="09:00">
+                        <input type="text" class="time-input" name="requested_clock_in"
+                            value="{{  old('requested_clock_in', $attendance->clock_in) }}">
                     </td>
                     <td class="tilde">～</td>
                     <td class="end_time">
-                        <input type="text" class="time-input" name="clock_out" value="17:00">
+                        <input type="text" class="time-input" name="requested_clock_out" value="{{old('requested_clock_out', $attendance->clock_out) }}
+                    </td>
+                    <td class=" error-cell">
+                        @error('requested_clock_out')
+                            <p class="error-message">{{ $message }}</p>
+                        @enderror
                     </td>
                 </tr>
-                <tr>
-                    <th>休憩</th>
-                    <td class="start_time">
-                        <input type="text" class="time-input" name="break_start[]" value="12:00">
-                    </td>
-                    <td class="tilde">～</td>
-                    <td class="end_time">
-                        <input type="text" class="time-input" name="break_end[]" value="13:00">
-                    </td>
-                </tr>
-                <tr>
-                    <th>休憩２</th>
-                    <td class="start_time">
-                        <input type="text" class="time-input" name="break_start[]" value="12:00">
-                    </td>
-                    <td class="tilde">～</td>
-                    <td class="end_time">
-                        <input type="text" class="time-input" name="break_end[]" value="13:00">
-                    </td>
-                </tr>
+                @foreach($attendance->breakTimes as $break)
+                    <tr>
+                        <th>休憩{{ $loop->iteration > 1 ? $loop->iteration : '' }}</th>
+                        <td class="start_time">
+                            <input type="text" class="time-input" name="requested_break_start[]"
+                                value="{{ old('requested_break_start' . $loop->index, $break->break_start) }}">
+                        </td>
+                        <td class="tilde">～</td>
+                        <td class="end_time">
+                            <input type="text" class="time-input" name="requested_break_end[]"
+                                value="{{ old('requested_break_end' . $loop->index, $break->break_end) }}">
+                        </td>
+                        <td class="error-cell">
+                            @if($errors->has('break_error'))
+                                <p>{{ $errors->first('break_error') }}</p>
+                            @endif
+                        </td>
+
+                    </tr>
+                @endforeach
                 <tr>
                     <th>備考</th>
                     <td colspan="3" class="wrapper_reason">
                         <input type="text" class="reason" name="reason">
+                    </td>
+                    <td class="error-cell">
+                        @error('reason')
+                            <p class="error-message">{{ $message }}</p>
+                        @enderror
                     </td>
                 </tr>
             </table>

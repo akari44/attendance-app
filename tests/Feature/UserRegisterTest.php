@@ -7,11 +7,12 @@ use Tests\TestCase;
 
 class UserRegisterTest extends TestCase
 {
-    use RefreshDatabase; 
+    use RefreshDatabase;
+    // テストケース　ID:1
     public function test_name_is_required_for_registration()
     {
-        
-    $response = $this->from('/register')->post('/register', [
+
+        $response = $this->from('/register')->post('/register', [
             'name' => '',
             'email' => 'test@example.com',
             'password' => 'password123',
@@ -20,7 +21,7 @@ class UserRegisterTest extends TestCase
 
         $response->assertRedirect('/register');
         $response->assertSessionHasErrors(['name']);
-        
+
         $response = $this->followRedirects($response);
         $response->assertSee('お名前を入力してください');
     }
@@ -41,7 +42,7 @@ class UserRegisterTest extends TestCase
         $response->assertSee('メールアドレスを入力してください');
     }
 
-      public function test_password_must_be_at_least_8_characters()
+    public function test_password_must_be_at_least_8_characters()
     {
         $response = $this->from('/register')->post('/register', [
             'name' => '一般ユーザー',
@@ -57,7 +58,7 @@ class UserRegisterTest extends TestCase
         $response->assertSee('パスワードは8文字以上で入力してください');
     }
 
-     public function test_password_confirmation_must_match(): void
+    public function test_password_confirmation_must_match(): void
     {
         $response = $this->from('/register')->post('/register', [
             'name' => '一般ユーザー',
@@ -73,7 +74,7 @@ class UserRegisterTest extends TestCase
         $response->assertSee('パスワードと一致しません');
     }
 
-      public function test_user_can_register_successfully(): void
+    public function test_user_can_register_successfully(): void
     {
         $response = $this->post('/register', [
             'name' => '一般ユーザー',

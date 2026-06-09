@@ -9,15 +9,15 @@ use App\Models\User;
 
 class UserLoginTest extends TestCase
 {
-    use RefreshDatabase; 
-    
+    use RefreshDatabase;
+    // テストケース　ID:2
     public function test_email_is_required_for_login()
     {
         $response = $this->from('/login')->post('/login', [
             'email' => '',
             'password' => 'password1234',
         ]);
-    
+
         $response->assertRedirect('/login');
         $response->assertSessionHasErrors(['email']);
 
@@ -39,7 +39,7 @@ class UserLoginTest extends TestCase
         $response->assertSee('パスワードを入力してください');
     }
 
-     public function test_user_cannot_login_with_invalid_credentials()
+    public function test_user_cannot_login_with_invalid_credentials()
     {
         $user = User::factory()->create([
             'email' => 'test@example.com',
