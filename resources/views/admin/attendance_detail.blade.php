@@ -14,8 +14,9 @@
         <h1>勤怠詳細</h1>
     </div>
 
-    <form action="" method="POST">
+    <form action="{{ route('admin.attendance.detail.update', $attendance->id) }}" method="POST">
         @csrf
+        @method('PUT')
         <table class="main-table">
             <table class="main-table">
                 <colgroup>
@@ -42,7 +43,8 @@
                     </td>
                     <td class="tilde">～</td>
                     <td class="end_time">
-                        <input type="text" class="time-input" name="requested_clock_out" value="{{old('requested_clock_out', $attendance->clock_out) }}
+                        <input type="text" class="time-input" name="requested_clock_out"
+                            value="{{old('requested_clock_out', $attendance->clock_out) }}">
                     </td>
                     <td class=" error-cell">
                         @error('requested_clock_out')

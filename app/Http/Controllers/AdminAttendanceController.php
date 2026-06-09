@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Attendance;
+use App\Models\BreakTime;
 use App\Models\AttendanceRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,5 +40,24 @@ class AdminAttendanceController extends Controller
             ->first();
 
         return view('admin.attendance_detail', compact('attendance', 'user', 'today', 'attendanceRequest'));
+    }
+
+    public function update(AttendanceCorrectionRequest $request, $id)
+    {
+        Attendance::where('id', $id)->update([
+            'clock_in' => $request->requested_clock_in,
+            'clock_out' => $request->requested_clock_out,
+        ]);
+        BreakTime::where('attendance_id', $id)->delete();
+
+        foreach ($request->requested_break_start ?? [] as $index => $breakStart) {
+            BreakTime::create([
+                'attendance_id' => $id,
+                'break_start' => $breakStart,
+                'break_end' => $request->requested_break_end[$index],
+            ]);
+        }
+
+        return redirect()->route('admin.attendance.detail', $id)->with('flashSuccess', '修正完了しました');
     }
 }

@@ -28,6 +28,7 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/attendance/list', [AdminAttendanceController::class, 'index'])->name('admin.attendance.list');
         Route::get('/attendance/{id}', [AdminAttendanceController::class, 'show'])->name('admin.attendance.detail');
+        Route::put('/attendance/{id}', [AdminAttendanceController::class, 'update'])->name('admin.attendance.detail.update');
         Route::get('/staff/list', [AdminStaffController::class, 'index'])->name('admin.staff.list');
         Route::get('/attendance/staff/{id}', [AdminStaffController::class, 'show'])->name('admin.attendance.staff');
         Route::get('/stamp_collection_request/approve', [AdminRequestApproveController::class, 'show'])->name('admin.request.approve');
