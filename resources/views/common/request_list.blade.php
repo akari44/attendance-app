@@ -47,7 +47,7 @@
                 <td>{{$request->status}}</td>
                 <td>{{$request->attendance->user->name}}</td>
                 <td>{{ date('Y/m/d', strtotime($request->attendance->getRawOriginal('date'))) }}</td>
-                <td>{{$request->reason}}</td>
+                <td class="reason">{{$request->reason}}</td>
                 <td>{{$request->created_at->format('Y/m/d')}}</td>
                 <td>
                     @if ($isAdmin)

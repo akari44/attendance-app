@@ -124,6 +124,11 @@ td a{
     color: #000;
     text-decoration: none;
 }
+.reason{
+    word-break: break-all; 
+    white-space: normal; 
+    max-width:160px;
+}
 
 .button-wrapper{
     display: flex;

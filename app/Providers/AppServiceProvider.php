@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
             public function toResponse($request)
             {
                 if (Auth::guard('admin')->check()) {
+                    Auth::guard('web')->logout(); 
                     return redirect('/admin/attendance/list')->with('flashSuccess', 'ログインしました');
                 }
                 return redirect('/attendance')->with('flashSuccess', 'ログインしました');
