@@ -8,13 +8,13 @@ use App\Models\User;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use Carbon\Carbon;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 class AttendanceUpdateTest extends TestCase
 {
     use RefreshDatabase;
-    // テストケース　ID:11
-    // 最後2件のみ未完了
-
+    // テストケース ID:11
     public function test_attendance_invalid_update_clock_time_shows_error()
     {
         $user = User::factory()->create();
@@ -201,6 +201,86 @@ class AttendanceUpdateTest extends TestCase
 
     }
 
+    public function test_all_approved_requests_is_on_list()
+    {
+        $user = User::factory()->create();
+        $admin = Admin::create([
+            'name' => 'テスト管理者',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $attendance = Attendance::create([
+            'user_id' => $user->id,
+            'date' => '2026-06-01',
+            'clock_in' => '09:00:00',
+            'clock_out' => '18:00:00',
+            'status' => '退勤済',
+        ]);
+        $this->actingAs($user)->post('/attendance/detail/' . $attendance->id, [
+            'requested_clock_in' => '08:00',
+            'reason' => '修正お願いします',
+        ]);
+        $attendance->refresh();
+        $this->actingAs($admin, 'admin')->put('/admin/stamp_correction_request/approve/' . $attendance->attendanceRequest->id);
+
+
+        $attendance = Attendance::create([
+            'user_id' => $user->id,
+            'date' => '2026-06-02',
+            'clock_in' => '09:00:00',
+            'clock_out' => '18:00:00',
+            'status' => '退勤済',
+        ]);
+        $this->actingAs($user)->post('/attendance/detail/' . $attendance->id, [
+            'requested_clock_in' => '08:20',
+            'reason' => '修正お願いします',
+        ]);
+        $attendance->refresh();
+        $this->actingAs($admin, 'admin')->put('/admin/stamp_correction_request/approve/' . $attendance->attendanceRequest->id);
+
+        $attendance = Attendance::create([
+            'user_id' => $user->id,
+            'date' => '2026-06-03',
+            'clock_in' => '09:00:00',
+            'clock_out' => '18:00:00',
+            'status' => '退勤済',
+        ]);
+        $this->actingAs($user)->post('/attendance/detail/' . $attendance->id, [
+            'requested_clock_in' => '08:40',
+            'reason' => '修正お願いします',
+        ]);
+        $attendance->refresh();
+        $this->actingAs($admin, 'admin')->put('/admin/stamp_correction_request/approve/' . $attendance->attendanceRequest->id);
+
+        $response = $this->actingAs($admin, 'admin')->get('/stamp_correction_request/list?tab=approved');
+        $response->assertSee('2026/06/01');
+        $response->assertSee('2026/06/02');
+        $response->assertSee('2026/06/03');
+    }
+    public function test_request_list_detail_button_work(){
+        $user = User::factory()->create();
+        $attendance = Attendance::create([
+            'user_id' => $user->id,
+            'date' => '2026-06-01',
+            'clock_in' => '09:00:00',
+            'clock_out' => '18:00:00',
+            'status' => '退勤済',
+        ]);
+        $this->actingAs($user)->post('/attendance/detail/' . $attendance->id, [
+            'requested_clock_in' => '08:00',
+            'reason' => '修正お願いします',
+        ]);
+
+        $attendance->refresh();
+      
+        $response = $this->actingAs($user)->get('/stamp_correction_request/list');
+        $response->assertSee('詳細');
+
+        $response = $this->actingAs($user)->get('/attendance/detail/' . $attendance->id);
+        $response->assertStatus(200);
+
+    }
 
 
 }

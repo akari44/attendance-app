@@ -25,13 +25,17 @@ class AttendanceSeeder extends Seeder
                 if ($monthsAgo === 0) {
                     // 今月は昨日まで毎日出勤と仮定
                     $end = Carbon::now()->subDay();
-                    ;
                 } else {
-                    // 先月・先々月は10日まで出勤と仮定
-                    $end = Carbon::now()->subMonths($monthsAgo)->startOfMonth()->addDays(9);
+                    $end = Carbon::now()->subMonths($monthsAgo)->endOfMonth();
                 }
 
+
                 while ($start->lte($end)) {
+                    // 土日はスキップ
+                    if ($start->isWeekend()) {
+                        $start->addDay();
+                        continue;
+                    }
                     $clockIn = rand(9, 10) . ':' . str_pad(rand(0, 59), 2, '0', STR_PAD_LEFT) . ':00';
                     $clockOut = rand(17, 20) . ':' . str_pad(rand(0, 59), 2, '0', STR_PAD_LEFT) . ':00';
 

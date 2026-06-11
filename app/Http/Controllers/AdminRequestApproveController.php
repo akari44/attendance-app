@@ -1,13 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\AttendanceRequest;
 
 class AdminRequestApproveController extends Controller
 {
-    public function show()
+    public function show($id)
     {
-        return view('admin.request_approve');
+        $attendanceRequest = AttendanceRequest::with('breakRequests', 'attendance.user')
+            ->findOrFail($id);
+        $attendance = $attendanceRequest->attendance;
+        $user = $attendance->user;
+        $today = Carbon::parse($attendance->getRawOriginal('date'));
+
+        return view('admin.request_approve', compact('attendance', 'user', 'today', 'attendanceRequest'));
     }
+
+    public function update($id)
+    {
+        AttendanceRequest::where('id', $id)->update(['status' => '承認済み']);
+        return redirect()->back()->with('flashSuccess', '承認しました');
+    }
+
+
 }

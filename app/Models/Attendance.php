@@ -14,7 +14,7 @@ class Attendance extends Model
         'date',
         'clock_in',
         'clock_out',
-        'status', 
+        'status',
     ];
 
     public function user()
@@ -26,7 +26,12 @@ class Attendance extends Model
     {
         return $this->hasMany(BreakTime::class);
     }
-    
+
+    public function attendanceRequest()
+    {
+        return $this->hasOne(AttendanceRequest::class);
+    }
+
     // 日時の表示方法
     public function getDateAttribute($value)
     {

@@ -33,16 +33,25 @@
             <th>合計</th>
             <th>詳細</th>
         </tr>
-        @foreach ($attendances as $attendance)
+        @foreach ($allDates as $date)
             <tr>
-                <td>{{$attendance->date}}</td>
-                <td>{{$attendance->clock_in}}</td>
-                <td>{{$attendance->clock_out}}</td>
-                <td>{{ $attendance->total_break_time }}</td>
-                <td>{{ $attendance->total_work_time }}</td>
-                <td>
-                    <a href="{{route('admin.attendance.detail', $attendance->id)}}">詳細</a>
-                </td>
+                <td>{{ $date->locale('ja')->isoFormat('M月D日(ddd)') }}</td>
+                @if (isset($attendances[$date->toDateString()]))
+                    @php $attendance = $attendances[$date->toDateString()] @endphp
+                    <td>{{ $attendance->clock_in }}</td>
+                    <td>{{ $attendance->clock_out }}</td>
+                    <td>{{ $attendance->total_break_time }}</td>
+                    <td>{{ $attendance->total_work_time }}</td>
+                    <td>
+                        <a href="{{ route('admin.attendance.detail', $attendance->id) }}">詳細</a>
+                    </td>
+                @else
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                @endif
             </tr>
         @endforeach
     </table>

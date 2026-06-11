@@ -11,6 +11,7 @@ class AttendanceCorrectionRequest extends FormRequest
      */
     public function authorize(): bool
     {
+
         return true;
     }
 

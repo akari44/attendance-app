@@ -107,32 +107,43 @@
                             </td>
                         </tr>
 
-                        @foreach($attendance->breakTimes as $break)
+                        @if($attendance->breakTimes->isEmpty())
                             <tr>
-                                <th>休憩{{ $loop->iteration > 1 ? $loop->iteration : '' }}</th>
+                                <th>休憩</th>
                                 <td class="start_time">
-                                    <input type="text" class="time-input" name="requested_break_start[]"
-                                        value="{{ old('requested_break_start' . $loop->index, $break->break_start) }}">
+                                    <input type="text" class="time-input" name="requested_break_start[]" value="">
                                 </td>
                                 <td class="tilde">～</td>
                                 <td class="end_time">
-                                    <input type="text" class="time-input" name="requested_break_end[]"
-                                        value="{{ old('requested_break_end' . $loop->index, $break->break_end) }}">
+                                    <input type="text" class="time-input" name="requested_break_end[]" value="">
                                 </td>
-                                <td class="error-cell">
-                                    @if($errors->has('break_error'))
-                                        <p>{{ $errors->first('break_error') }}</p>
-                                    @endif
-                                </td>
-
                             </tr>
-                        @endforeach
-
+                        @else
+                            @foreach($attendance->breakTimes as $break)
+                                <tr>
+                                    <th>休憩{{ $loop->iteration > 1 ? $loop->iteration : '' }}</th>
+                                    <td class="start_time">
+                                        <input type="text" class="time-input" name="requested_break_start[]"
+                                            value="{{ old('requested_break_start.' . $loop->index, $break->break_start) }}">
+                                    </td>
+                                    <td class="tilde">～</td>
+                                    <td class="end_time">
+                                        <input type="text" class="time-input" name="requested_break_end[]"
+                                            value="{{ old('requested_break_end.' . $loop->index, $break->break_end) }}">
+                                    </td>
+                                    <td class="error-cell">
+                                        @if($errors->has('break_error'))
+                                            <p>{{ $errors->first('break_error') }}</p>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
 
                         <tr>
                             <th>備考</th>
                             <td colspan="3" class="wrapper_reason">
-                                <input type="text" class="reason" name="reason">
+                                <input type="text" class="reason" name="reason" value="{{ old('reason') }}">
                             </td>
                             <td class="error-cell">
                                 @error('reason')

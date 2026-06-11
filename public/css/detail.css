@@ -103,6 +103,7 @@ td {
     color: #fff;
     padding: 5px 40px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .info-wrapper{

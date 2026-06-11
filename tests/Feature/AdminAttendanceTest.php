@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminAttendanceTest extends TestCase
 {
     use RefreshDatabase;
-    // テストケース　ID:12
+    // テストケース ID:12
     public function test_admin_can_see_all_attendances()
     {
         $admin = Admin::create([
