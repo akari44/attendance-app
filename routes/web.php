@@ -6,14 +6,13 @@ use App\Http\Controllers\AdminStaffController;
 use App\Http\Controllers\AdminRequestApproveController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceListController;
-
 use App\Http\Controllers\StampCorrectionRequestController;
 use Illuminate\Support\Facades\Route;
 
 
 
 // 一般ユーザー
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'show'])->name('user.attendance');
     Route::post('/attendance', [AttendanceController::class, 'store'])->name('user.attendance.store');
     Route::get('/attendance/list', [AttendanceListController::class, 'index'])->name('user.attendance.list');
@@ -33,11 +32,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/staff/list', [AdminStaffController::class, 'index'])->name('admin.staff.list');
         Route::get('/stamp_correction_request/approve/{id}', [AdminRequestApproveController::class, 'show'])->name('admin.request.approve');
         Route::put('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestApproveController::class, 'update'])->name('admin.request.approve.update');
-        // 今後増える管理者ルートもここに
-
+        Route::get('/attendance/staff/{id}/export', [AdminStaffController::class, 'exportCsv'])->name('admin.staff.export');
     });
 
 });
 
+// 共通
 Route::get('/stamp_correction_request/list', [StampCorrectionRequestController::class, 'index'])->name('common.request.list')->middleware('auth:web,admin');
 

@@ -17,6 +17,8 @@ use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Contracts\VerifyEmailViewResponse;
+
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -69,6 +71,13 @@ class FortifyServiceProvider extends ServiceProvider
                     return $user;
                 }
             }
+        });
+        // メール認証
+        $this->app->instance(VerifyEmailViewResponse::class, new class implements VerifyEmailViewResponse {
+            public function toResponse($request)
+                {
+                    return view('user.verify-email');
+                }
         });
 
     }

@@ -57,8 +57,9 @@
     </table>
 
     <div class="button-wrapper">
-        <form action="#" method="get">
-            <button type="submit" class="submit-btn">CSV出力</button>
+        <form action="{{ route('admin.staff.export', ['id' => $user->id, 'month' => $month]) }}" method="get">
+            <input type="hidden" name="month" value="{{ $month }}">
+            <button class="submit-btn" type="submit">CSV出力</button>
         </form>
     </div>
 
