@@ -1,66 +1,193 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 模擬案件２（勤怠管理アプリ）
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 概要
 
-## About Laravel
+laravelを用いた勤怠管理アプリケーションです。
+スタッフの勤怠情報作成と管理機能を実装しています。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 環境構築
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1.リポジトリのクローン
 
-## Learning Laravel
+```bash
+git clone git@github.com:akari44/attendance-app.git
+cd attendance-app
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2. .env ファイルの作成
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```Bash
+cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3.環境変数の設定
 
-## Laravel Sponsors
+以下の値を.envに設定してください：
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```env
+DB_USERNAME=sail
+DB_PASSWORD=password
+```
 
-### Premium Partners
+### 4.DockerDesktop の起動
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Docker Desktop アプリを起動してください。
 
-## Contributing
+### 5.Composerインストール（依存パッケージのインストール）
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```Bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php82-composer:latest \
+    composer install
+```
 
-## Code of Conduct
+### 6. sail起動
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```Bash
+./vendor/bin/sail up -d
+```
 
-## Security Vulnerabilities
+Dockerのビルド・起動も同時に行われます。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 7.アプリケーションキーの生成
 
-## License
+```Bash
+sail artisan key:generate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 8.マイグレーション・シーディングの実行
+
+```Bash
+sail artisan migrate --seed
+```
+
+---
+
+## 主な機能
+
+- 一般ユーザー登録 / ログイン
+- 管理者ログイン
+- 勤怠打刻機能（一般ユーザーのみ）
+- 勤怠ステータス表示機能（一般ユーザーのみ）
+- 勤怠一覧確認機能
+- 勤怠詳細確認機能
+- 勤怠修正申請機能
+- 勤怠修正承認・修正機能（管理者のみ）
+
+---
+
+## 使用技術（実行環境）
+
+- PHP 8.2
+- Laravel 10
+- MySQL 8.0
+- Laravel Sail
+- Docker Desktop
+- Docker Compose
+- phpMyAdmin
+- Mailhog
+- GitHub
+
+---
+
+## システム要件（抜粋）
+
+| 項目           | 内容                         |
+| -------------- | ---------------------------- |
+| 開発環境       | 開発者がローカル環境を用意   |
+| 本番サーバー   | 設置しない                   |
+| ドメイン       | 取得しない                   |
+| SSL            | 考慮しない                   |
+| データベース   | MySQL                        |
+| セキュリティ   | アプリケーション内に限り考慮 |
+| 開発言語       | PHP / Laravel                |
+| バージョン管理 | Docker / GitHub              |
+| リリース予定   | 4ヶ月後                      |
+
+---
+
+## ER図
+
+## ![ER図](ER.png)
+
+## 動作確認
+
+### アプリケーション
+
+以下にアクセスしてください。
+
+#### 管理者
+
+- http://localhost/admin/login
+
+#### 一般ユーザー
+
+- http://localhost/login
+
+### phpMyAdmin
+
+- http://localhost:8080
+
+---
+
+### テストユーザー
+
+以下のユーザーでログイン可能です。
+
+#### 管理者
+
+| メールアドレス      | パスワード |
+| ------------------- | ---------- |
+| admin@coachtech.com | password   |
+
+#### 一般ユーザー
+
+| 名前       | メールアドレス          | パスワード |
+| ---------- | ----------------------- | ---------- |
+| 西　伶奈   | reina.n@coachtech.com   | password   |
+| 山田　太郎 | taro.y@coachtech.com    | password   |
+| 益田　一世 | issei.m@coachtech.com   | password   |
+| 山本　敬吉 | keiichi.y@coachtech.com | password   |
+| 秋田　朋美 | tomomi.a@coachtech.com  | password   |
+| 中西　教夫 | norio.n@coachtech.com   | password   |
+
+- テストユーザーはシーディングで作成されています。
+- テストユーザーには、それぞれ本日までの勤怠情報が作成されています。
+
+### Mailhog（メール確認）
+
+- http://localhost:8025
+
+---
+
+## PHPUnitによる機能テスト
+
+### 1. テスト用データベースの作成
+
+```bash
+sail mysql -u root -ppassword
+```
+
+```sql
+CREATE DATABASE laravel_test;
+exit;
+```
+
+### 2. テスト実行
+
+```bash
+sail test
+```
+
+#### 特定テストのみ実行する場合
+
+```bash
+sail test --filter=テスト名
+```
+
+---
