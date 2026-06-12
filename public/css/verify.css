@@ -71,6 +71,7 @@ span{
     background-color: red;
     border-radius: 10ox;
     padding: 10px;
+    cursor: pointer;
 }
 
 .verify_email__again{
@@ -89,6 +90,7 @@ span{
     padding: 5px;
     font-size: 15px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 .verify_form{
     margin: 0 auto;

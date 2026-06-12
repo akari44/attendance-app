@@ -16,10 +16,9 @@ class AttendanceDetailTest extends TestCase
     // テストケース　ID:10
     public function test_attendance_detail_shows_user_name()
     {
-        $user = User::create([
+        $user = User::factory()->create([
             'name' => 'テスト太郎',
             'email' => 'user1@example.com',
-            'password' => Hash::make('password')
         ]);
         $attendance = Attendance::create([
             'user_id' => $user->id,

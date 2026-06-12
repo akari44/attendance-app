@@ -12,17 +12,21 @@ laravelを用いた勤怠管理アプリケーションです。
 ### 1.リポジトリのクローン
 
 ```bash
-git clone git@github.com:akari44/attendance-app.git
+git clone https://github.com/akari44/attendance-app.git
 cd attendance-app
 ```
 
-### 2. .env ファイルの作成
+### 2.DockerDesktop の起動
+
+Docker Desktop アプリを起動してください。
+
+### 3. .env ファイルの作成
 
 ```Bash
 cp .env.example .env
 ```
 
-### 3.環境変数の設定
+### 4.環境変数の設定
 
 以下の値を.envに設定してください：
 
@@ -30,10 +34,6 @@ cp .env.example .env
 DB_USERNAME=sail
 DB_PASSWORD=password
 ```
-
-### 4.DockerDesktop の起動
-
-Docker Desktop アプリを起動してください。
 
 ### 5.Composerインストール（依存パッケージのインストール）
 
@@ -48,11 +48,11 @@ docker run --rm \
 
 ### 6. sail起動
 
+以下のコマンドで、Dockerのビルド・起動も同時に行われます。
+
 ```Bash
 ./vendor/bin/sail up -d
 ```
-
-Dockerのビルド・起動も同時に行われます。
 
 ### 7.アプリケーションキーの生成
 

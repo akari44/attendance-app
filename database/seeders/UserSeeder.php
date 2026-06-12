@@ -21,11 +21,13 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $user) {
-            User::create([
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'password' => Hash::make('password'),
-            ]);
+            User::firstOrCreate(
+                ['email' => $user['email']],
+                [
+                    'name' => $user['name'],
+                    'password' => Hash::make('password'),
+                ]
+            );
         }
     }
 }
