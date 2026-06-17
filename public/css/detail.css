@@ -120,3 +120,8 @@ td {
     text-align: left;
     vertical-align: center;
 }
+
+.submit-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}

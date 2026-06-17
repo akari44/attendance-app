@@ -20,6 +20,7 @@ class AdminRequestApproveController extends Controller
 
     public function update($id)
     {
+
         $attendanceRequest = AttendanceRequest::with('breakRequests')->findOrFail($id);
 
         Attendance::where('id', $attendanceRequest->attendance_id)->update([
@@ -34,8 +35,9 @@ class AdminRequestApproveController extends Controller
                 'break_start' => $breakRequest->requested_break_start,
                 'break_end' => $breakRequest->requested_break_end,
             ]);
-        }AttendanceRequest::where('id', $id)->update(['status' => '承認済み']);
-            return redirect()->back()->with('flashSuccess', '承認しました');
+        }
+        AttendanceRequest::where('id', $id)->update(['status' => '承認済み']);
+        return redirect()->back()->with('flashSuccess', '承認しました');
     }
 
 

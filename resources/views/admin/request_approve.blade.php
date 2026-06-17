@@ -67,7 +67,11 @@
             </tr>
         </table>
         <div class="button-wrapper">
-            <button type="submit" class="submit-btn">承認</button>
+            @if ($attendanceRequest->status === '承認済み')
+                <button class="submit-btn" disabled>承認済み</button>
+            @else
+                <button type="submit" class="submit-btn">承認</button>
+            @endif
         </div>
     </form>
 
