@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
 use App\Models\User;
@@ -14,70 +13,98 @@ class AttendanceSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
+    private function getWeekdays(Carbon $month, int $count): array
+    {
+        $dates = [];
+        $date = $month->copy();
+
+        while (count($dates) < $count) {
+            if ($date->isWeekday()) {
+                $dates[] = $date->toDateString();
+            }
+            $date->addDay();
+        }
+        return $dates;
+    }
+
     public function run(): void
     {
-        $users = User::all();
+        $user1 = User::Where('email', 'user1@example.com')->first();
+        $user2 = User::Where('email', 'user2@example.com')->first();
 
-        foreach ($users as $user) {// 3か月分の出勤日の取得
-            foreach ([0, 1, 2] as $monthsAgo) {
-                $start = Carbon::now()->subMonths($monthsAgo)->startOfMonth();
+        for ($i = 5; $i >= 1; $i--) {
+            $month = Carbon::now()->subMonths($i)->startOfMonth();
+            $weekdays = $this->getWeekdays($month, 15);
 
-                if ($monthsAgo === 0) {
-                    // 今月は昨日まで毎日出勤と仮定
-                    $end = Carbon::now()->subDay();
-                } else {
-                    $end = Carbon::now()->subMonths($monthsAgo)->endOfMonth();
-                }
+            foreach ($weekdays as $date) {
+                $attendance = Attendance::create([
+                    'user_id' => $user1->id,
+                    'date' => $date,
+                    'clock_in' => '09:00:00',
+                    'clock_out' => '18:00:00',
+                    'status' => '退勤済',
+                ]);
 
-
-                while ($start->lte($end)) {
-                    // 土日はスキップ
-                    if ($start->isWeekend()) {
-                        $start->addDay();
-                        continue;
-                    }
-                    $clockIn = rand(9, 10) . ':' . str_pad(rand(0, 59), 2, '0', STR_PAD_LEFT) . ':00';
-                    $clockOut = rand(17, 20) . ':' . str_pad(rand(0, 59), 2, '0', STR_PAD_LEFT) . ':00';
-
-                    $attendance = Attendance::create([
-                        'user_id' => $user->id,
-                        'date' => $start->toDateString(),
-                        'clock_in' => $clockIn,
-                        'clock_out' => $clockOut,
-                        'status' => '退勤済',
-                    ]);
-
-                    $breakStart1 = rand(12, 13) . ':' . str_pad(rand(0, 59), 2, '0', STR_PAD_LEFT) . ':00';
-                    $breakEnd1 = rand(13, 14) . ':' . str_pad(rand(1, 59), 2, '0', STR_PAD_LEFT) . ':00';
-                    $breakStart2 = rand(15, 16) . ':' . str_pad(rand(0, 59), 2, '0', STR_PAD_LEFT) . ':00';
-                    $breakEnd2 = rand(16, 17) . ':' . str_pad(rand(1, 59), 2, '0', STR_PAD_LEFT) . ':00';
-
-                    $breakPattern = rand(1, 3);
-
-                    if ($breakPattern === 1) {
-                        // 休憩なし
-                    } elseif ($breakPattern === 2) {
-                        // 休憩1回
-                        BreakTime::create([
-                            'attendance_id' => $attendance->id,
-                            'break_start' => $breakStart1,
-                            'break_end' => $breakEnd1,
-                        ]);
-                    } else {
-                        BreakTime::create([
-                            'attendance_id' => $attendance->id,
-                            'break_start' => $breakStart1,
-                            'break_end' => $breakEnd1,
-                        ]);
-                        BreakTime::create([
-                            'attendance_id' => $attendance->id,
-                            'break_start' => $breakStart2,
-                            'break_end' => $breakEnd2,
-                        ]);
-                    }
-                    $start->addDay();
-                }
+                BreakTime::create([
+                    'attendance_id' => $attendance->id,
+                    'break_start' => '12:00:00',
+                    'break_end' => '13:00:00'
+                ]);
             }
         }
+
+        $patterns = [
+            ...array_fill(0, 10, ['in' => '09:00:00', 'out' => '18:00:00']),
+            ...array_fill(0, 3, ['in' => '09:00:00', 'out' => '20:00:00']),
+            ...array_fill(0, 2, ['in' => '09:30:00', 'out' => '18:00:00']),
+            ...array_fill(0, 1, ['in' => '09:00:00', 'out' => '17:00:00']),
+            ...array_fill(0, 1, ['in' => '08:00:00', 'out' => '21:00:00']),
+        ];
+
+        $month = Carbon::now()->startOfMonth();
+        $weekdays = $this->getWeekdays($month, 17);
+
+
+        for ($i = 0; $i < 17; $i++) {
+            $date = $weekdays[$i];
+            $pattern = $patterns[$i];
+
+            $attendance = Attendance::create([
+                'user_id' => $user1->id,
+                'date' => $date,
+                'clock_in' => $pattern['in'],
+                'clock_out' => $pattern['out'],
+                'status' => '退勤済',
+            ]);
+
+            BreakTime::create([
+                'attendance_id' => $attendance->id,
+                'break_start' => '12:00:00',
+                'break_end' => '13:00:00'
+            ]);
+        }
+
+        for ($i = 5; $i >= 0; $i--) {
+            $month = Carbon::now()->subMonths($i)->startOfMonth();
+            $weekdays = $this->getWeekdays($month, 15);
+
+            foreach ($weekdays as $date) {
+                $attendance = Attendance::create([
+                    'user_id' => $user2->id,
+                    'date' => $date,
+                    'clock_in' => '09:00:00',
+                    'clock_out' => '18:00:00',
+                    'status' => '退勤済',
+                ]);
+
+                BreakTime::create([
+                    'attendance_id' => $attendance->id,
+                    'break_start' => '12:00:00',
+                    'break_end' => '13:00:00'
+                ]);
+            }
+        }
+
     }
 }

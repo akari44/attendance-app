@@ -141,23 +141,19 @@ sail artisan migrate --seed
 
 #### 管理者
 
-| メールアドレス      | パスワード |
-| ------------------- | ---------- |
-| admin@coachtech.com | password   |
+| メールアドレス    | パスワード |
+| ----------------- | ---------- |
+| user3@example.com | password   |
 
 #### 一般ユーザー
 
-| 名前       | メールアドレス          | パスワード |
-| ---------- | ----------------------- | ---------- |
-| 西　伶奈   | reina.n@coachtech.com   | password   |
-| 山田　太郎 | taro.y@coachtech.com    | password   |
-| 益田　一世 | issei.m@coachtech.com   | password   |
-| 山本　敬吉 | keiichi.y@coachtech.com | password   |
-| 秋田　朋美 | tomomi.a@coachtech.com  | password   |
-| 中西　教夫 | norio.n@coachtech.com   | password   |
+| 名前  | メールアドレス    | パスワード |
+| ----- | ----------------- | ---------- |
+| user1 | user1@example.com | password   |
+| user2 | user2@example.com | password   |
 
 - テストユーザーはシーディングで作成されています。
-- テストユーザーには、それぞれ本日までの勤怠情報が作成されています。
+- テストユーザーには、ダミーの勤怠情報が作成されています。
 
 ### Mailhog（メール確認）
 

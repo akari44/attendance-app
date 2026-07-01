@@ -26,6 +26,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => ['required'],
             'email' => [
                 'required',
+                'email',
                 Rule::unique(User::class),
             ],
             'password' => ['required', 'min:8', 'confirmed'],
@@ -33,6 +34,7 @@ class CreateNewUser implements CreatesNewUsers
         $messages = [
             'name.required' => 'お名前を入力してください',
             'email.required' => 'メールアドレスを入力してください',
+            'email.email' => 'メールアドレスはメール形式で入力してください',
             'email.unique' => 'こちらのメールアドレスはすでに登録されています',
             'password.required' => 'パスワードを入力してください',
             'password.min' => 'パスワードは8文字以上で入力してください',

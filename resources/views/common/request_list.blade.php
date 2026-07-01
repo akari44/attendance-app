@@ -3,7 +3,7 @@
 @endphp
 @extends('layouts.default')
 {{-- タイトル --}}
-@section('title', '申請一覧画面.')
+@section('title', '申請一覧画面')
 {{-- css --}}
 @section('css')
     <link rel="stylesheet" href="{{ asset('/css/list.css')}}">

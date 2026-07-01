@@ -73,4 +73,6 @@ class Attendance extends Model
         return sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
     }
 
+
+
 }
