@@ -5,20 +5,22 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
-use App\Models\User;
+use App\Models\Admin;
 
-class UserLoginTest extends TestCase
+class ID03_AdminLoginTest extends TestCase
 {
     use RefreshDatabase;
-    // テストケース　ID:2
+    // テストケース　ID:3
+
     public function test_email_is_required_for_login()
     {
-        $response = $this->from('/login')->post('/login', [
+        $response = $this->from('/admin/login')->post('/login', [
             'email' => '',
             'password' => 'password1234',
+            'type' => 'admin',
         ]);
 
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/admin/login');
         $response->assertSessionHasErrors(['email']);
 
         $response = $this->followRedirects($response);
@@ -27,12 +29,13 @@ class UserLoginTest extends TestCase
 
     public function test_password_is_required_for_login()
     {
-        $response = $this->from('/login')->post('/login', [
+        $response = $this->from('/admin/login')->post('/login', [
             'email' => 'test@example.com',
             'password' => '',
+            'type' => 'admin',
         ]);
 
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/admin/login');
         $response->assertSessionHasErrors(['password']);
 
         $response = $this->followRedirects($response);
@@ -41,17 +44,19 @@ class UserLoginTest extends TestCase
 
     public function test_user_cannot_login_with_invalid_credentials()
     {
-        $user = User::factory()->create([
-            'email' => 'test@example.com',
+        $admin = Admin::create([
+            'name' => 'テスト管理者',
+            'email' => 'admin@example.com',
             'password' => Hash::make('password1234'),
         ]);
 
-        $response = $this->from('/login')->post('/login', [
-            'email' => 'test@example.com',
+        $response = $this->from('/admin/login')->post('/login', [
+            'email' => 'admin@example.com',
             'password' => 'wrongpassword',
+            'type' => 'admin',
         ]);
 
-        $response->assertRedirect('/login');
+        $response->assertRedirect('/admin/login');
         $response->assertSessionHasErrors();
         $this->assertGuest();
 

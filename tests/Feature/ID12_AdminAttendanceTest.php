@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Hash;
 
-class AdminAttendanceTest extends TestCase
+class ID12_AdminAttendanceTest extends TestCase
 {
     use RefreshDatabase;
     // テストケース ID:12

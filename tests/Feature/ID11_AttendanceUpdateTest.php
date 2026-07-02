@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 
-class AttendanceUpdateTest extends TestCase
+class ID11_AttendanceUpdateTest extends TestCase
 {
     use RefreshDatabase;
     // テストケース ID:11
@@ -258,7 +258,8 @@ class AttendanceUpdateTest extends TestCase
         $response->assertSee('2026/06/02');
         $response->assertSee('2026/06/03');
     }
-    public function test_request_list_detail_button_work(){
+    public function test_request_list_detail_button_work()
+    {
         $user = User::factory()->create();
         $attendance = Attendance::create([
             'user_id' => $user->id,
@@ -273,7 +274,7 @@ class AttendanceUpdateTest extends TestCase
         ]);
 
         $attendance->refresh();
-      
+
         $response = $this->actingAs($user)->get('/stamp_correction_request/list');
         $response->assertSee('詳細');
 

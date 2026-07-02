@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 
-class AttendanceListTest extends TestCase
+class ID09_AttendanceListTest extends TestCase
 {
     use RefreshDatabase;
     // テストケース　ID:9

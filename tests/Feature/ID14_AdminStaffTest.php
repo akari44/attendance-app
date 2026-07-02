@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Admin;
@@ -11,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Attendance;
 use Carbon\Carbon;
 
-class AdminStaffTest extends TestCase
+class ID14_AdminStaffTest extends TestCase
 {
     use RefreshDatabase;
     // テストケース　ID:14

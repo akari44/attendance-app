@@ -10,7 +10,7 @@ use App\Models\BreakTime;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
-class AttendanceDetailTest extends TestCase
+class ID10_AttendanceDetailTest extends TestCase
 {
     use RefreshDatabase;
     // テストケース　ID:10

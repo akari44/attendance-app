@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 
-class AttendanceTest extends TestCase
+class ID04_08_AttendanceTest extends TestCase
 {
     use RefreshDatabase;
     // テストケース　ID:4,5,6,7,8
