@@ -72,6 +72,11 @@ class Attendance extends Model
         $minutes = $workMinutes - $this->total_break_minutes;
         return sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
     }
+    // api用
+    public function applications()
+    {
+        return $this->hasOne(AttendanceRequest::class);
+    }
 
 
 
