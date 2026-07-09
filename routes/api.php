@@ -14,7 +14,7 @@ use App\Http\Controllers\Api\V1\AttendanceRecordController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::apiResource('1/attendance-records', AttendanceRecordController::class)->only(['index', 'show']);
+Route::apiResource('v1/attendance-records', AttendanceRecordController::class)->only(['index', 'show']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('v1/attendance-records', AttendanceRecordController::class)->only(['store', 'update', 'destroy']);

@@ -22,7 +22,7 @@ class StoreAttendanceRecordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => 'required|date_format:Y-m-d|unique:attendance_records,date,NULL,id,user_id,' . auth()->id(),
+            'date' => 'required|date_format:Y-m-d|unique:attendances,date,NULL,id,user_id,' . auth()->id(),
             'clock_in' => 'required|date_format:H:i:s',
             'clock_out' => 'nullable|date_format:H:i:s',
             'comment' => 'string|nullable|max:255',
@@ -32,7 +32,7 @@ class StoreAttendanceRecordRequest extends FormRequest
     public function messages()
     {
         return [
-            'date.required' => ' 勤怠日は必須です。',
+            'date.required' => '勤怠日は必須です。',
             'date.date_format' => '勤怠日は YYYY-MM-DD 形式で指定してください。',
             'date.unique' => 'この日付の勤怠は既に登録されています。',
             'clock_in.required' => '出勤時刻は必須です。',

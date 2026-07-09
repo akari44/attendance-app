@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 
 class ID10_AttendanceDetailTest extends TestCase
 {

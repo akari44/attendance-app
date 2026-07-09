@@ -47,31 +47,33 @@ class AttendanceRecordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Attendance $attendance): JsonResponse
+    public function show(Attendance $attendanceRecord): JsonResponse
     {
-        $attendance->load(['user', 'breakTimes', 'applications']);
-        return (new AttendanceRecordResource($attendance))->response();
+        $attendanceRecord->load(['user', 'breakTimes', 'applications']);
+        return (new AttendanceRecordResource($attendanceRecord))->response();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAttendanceRecordRequest $request, Attendance $attendance): JsonResponse
-    {
-        $this->authorize('update', $attendance);
+    public function update(
+        UpdateAttendanceRecordRequest $request,
+        Attendance $attendanceRecord
+    ): JsonResponse {
+        $this->authorize('update', $attendanceRecord);
         $validated = $request->validated();
-        $attendance->update($validated);
-        $attendance->load(['user', 'breakTimes']);
-        return (new AttendanceRecordResource($attendance))->response();
+        $attendanceRecord->update($validated);
+        $attendanceRecord->load(['user', 'breakTimes']);
+        return (new AttendanceRecordResource($attendanceRecord))->response();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Attendance $attendance): JsonResponse
+    public function destroy(Attendance $attendanceRecord): JsonResponse
     {
-        $this->authorize('delete', $attendance);
-        $attendance->delete();
+        $this->authorize('delete', $attendanceRecord);
+        $attendanceRecord->delete();
         return response()->json(null, 204);
 
     }
