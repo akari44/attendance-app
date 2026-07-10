@@ -22,7 +22,7 @@ class UpdateAttendanceRecordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => 'sometimes|date_format:Y-m-d|unique:attendance_records,date,' . $this->route('attendanceRecord') . ',id,user_id,' . auth()->id(),
+            'date' => 'sometimes|date_format:Y-m-d|unique:attendances,date,' . $this->route('attendanceRecord') . ',id,user_id,' . auth()->id(),
             'clock_in' => 'sometimes|date_format:H:i:s',
             'clock_out' => 'sometimes|nullable|date_format:H:i:s',
             'comment' => 'string|sometimes|nullable|max:255',
