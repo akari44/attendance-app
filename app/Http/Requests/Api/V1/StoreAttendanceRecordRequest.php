@@ -29,7 +29,7 @@ class StoreAttendanceRecordRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'date.required' => '勤怠日は必須です。',
@@ -42,7 +42,7 @@ class StoreAttendanceRecordRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function withValidator($validator): void
     {
         $validator->after(function ($validator) {
             // 退勤が出勤より前

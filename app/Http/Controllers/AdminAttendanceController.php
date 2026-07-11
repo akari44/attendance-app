@@ -14,7 +14,7 @@ class AdminAttendanceController extends Controller
     {
         $date = $request->date ?? Carbon::today()->format('Y-m-d');
 
-        $attendances = Attendance::with('user')
+        $attendances = Attendance::with(['user', 'breakTimes'])
             ->where('date', Carbon::parse($date)->toDateString())
             ->get();
 

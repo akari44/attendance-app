@@ -8,39 +8,26 @@ use App\Models\User;
 class AttendanceRecordPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * 管理者は全操作を許可する
+     * @param User $user
+     * @param string $ability
+     * @return bool|null
      */
 
-    public function before($user, string $ability): bool|null
+    public function before(User $user, string $ability): bool|null
     {
         if ($user instanceof \App\Models\Admin) {
             return true;
         }
         return null;
     }
-    public function viewAny(User $user): bool
-    {
-        //
-    }
+
 
     /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Attendance $attendance): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can update the model.
+     * 勤怠の更新権限を確認する
+     * @param User $user
+     * @param Attendance $attendance
+     * @return bool
      */
     public function update(User $user, Attendance $attendance): bool
     {
@@ -48,26 +35,14 @@ class AttendanceRecordPolicy
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * 勤怠の削除権限を確認する
+     * @param User $user
+     * @param Attendance $attendance
+     * @return bool
      */
     public function delete(User $user, Attendance $attendance): bool
     {
         return $user->id === $attendance->user_id;
     }
 
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Attendance $attendance): bool
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Attendance $attendance): bool
-    {
-        //
-    }
 }

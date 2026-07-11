@@ -78,6 +78,8 @@ sail artisan migrate --seed
 - 勤怠詳細確認機能
 - 勤怠修正申請機能
 - 勤怠修正承認・修正機能（管理者のみ）
+- マイ勤怠レポート機能
+- 公開API（勤怠情報の取得・作成・更新・削除）
 
 ---
 
@@ -90,8 +92,9 @@ sail artisan migrate --seed
 - Docker Desktop
 - Docker Compose
 - phpMyAdmin
-- Mailhog
 - GitHub
+- Mailhog
+- Laravel Sanctum
 
 ---
 
@@ -152,8 +155,7 @@ sail artisan migrate --seed
 | user1 | user1@example.com | password   |
 | user2 | user2@example.com | password   |
 
-- テストユーザーはシーディングで作成されています。
-- テストユーザーには、ダミーの勤怠情報が作成されています。
+- ユーザーと勤怠情報はシーディングで作成されています。
 
 ### Mailhog（メール確認）
 
@@ -185,5 +187,31 @@ sail test
 ```bash
 sail test --filter=テスト名
 ```
+
+---
+
+## API
+
+### 認証
+
+Sanctumのトークン認証を使用。
+
+### トークン取得
+
+```bash
+sail artisan tinker
+$user = \App\Models\User::find(1);
+echo $user->createToken('token-name')->plainTextToken;
+```
+
+### エンドポイント
+
+| メソッド | パス                            | 認証 |
+| -------- | ------------------------------- | ---- |
+| GET      | /api/v1/attendance-records      | 不要 |
+| GET      | /api/v1/attendance-records/{id} | 不要 |
+| POST     | /api/v1/attendance-records      | 必要 |
+| PUT      | /api/v1/attendance-records/{id} | 必要 |
+| DELETE   | /api/v1/attendance-records/{id} | 必要 |
 
 ---
