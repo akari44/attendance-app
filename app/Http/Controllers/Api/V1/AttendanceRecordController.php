@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Resources\AttendanceRecordResource;
 use App\Http\Requests\Api\V1\IndexAttendanceRecordRequest;
 use App\Http\Requests\Api\V1\StoreAttendanceRecordRequest;

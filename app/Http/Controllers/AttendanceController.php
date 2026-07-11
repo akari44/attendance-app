@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Auth;
 
 
 class AttendanceController extends Controller
