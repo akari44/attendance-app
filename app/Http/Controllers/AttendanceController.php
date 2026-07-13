@@ -142,6 +142,9 @@ class AttendanceController extends Controller
             ];
         });
 
+
+
+
         $lateCount = $attendances->filter(function ($attendance) {
             return Carbon::parse($attendance->getRawOriginal('clock_in'))->gt(Carbon::parse('09:00:00'));
         })->count();

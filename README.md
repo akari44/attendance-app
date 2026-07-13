@@ -63,7 +63,7 @@ sail artisan key:generate
 ### 8.マイグレーション・シーディングの実行
 
 ```Bash
-sail artisan migrate --seed
+sail artisan migrate:fresh --seed
 ```
 
 ---
